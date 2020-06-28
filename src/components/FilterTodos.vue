@@ -1,22 +1,25 @@
 <template>
    <section class="section">
       <div class="container">
+         <div class="notification is-info" v-show="notice">
+         <button class="delete" @click="notice=false"></button>
+         This is just a vue.js + vuex frontend demo. The data you entered will not persist as this is connected to a <a href="https://jsonplaceholder.typicode.com/" target="_blank">mock backend</a>.
+         </div>
+         <h1 class="is-size-1 has-text-weight-medium">Todos</h1>
          <div class="columns is-mobile">
             <div class="column">
-               <span class="incomplete-box"></span> = Incomplete
+               <span class="incomplete-box"></span> Incomplete<br>
+               <span class="complete-box"></span> Complete
             </div>
-            <div class="column">
-               <span class="complete-box"></span> = Complete
-            </div>
-            <div class="column">
+            <div class="column has-text-right">
                <div class="select is-small">
                   <select @change="filterTodos($event)">
-                     <option value="200">200</option>
-                     <option value="100">100</option>
-                     <option value="50">50</option>
-                     <option value="20">20</option>
-                     <option value="10">10</option>
+                     <option value="0">-</option>
                      <option value="5">5</option>
+                     <option value="10">10</option>
+                     <option value="20">20</option>
+                     <option value="50">50</option>
+                     <option value="100">100</option>
                   </select>
                </div>
             </div>
@@ -32,6 +35,11 @@ export default {
    methods: {
       ...mapActions(["filterTodos"]),
    },
+   data(){
+      return {
+         notice: true
+      }
+   }
 };
 </script>
 

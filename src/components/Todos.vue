@@ -1,5 +1,5 @@
 <template>
-   <section class="section">
+   <section class="section pt-0">
       <div class="container">
          <div class="todos">
             <div
@@ -7,12 +7,15 @@
                :key="todo.id"
                class="card todo has-text-white"
                @contextmenu="updateCompleted($event, todo)"
-               @click="editTitle(todo)"
                :class="{ 'is-complete': todo.completed }"
             >
                <div class="card-content">
                   <div class="content">
-                     <span v-if="todo.id !== updateId">{{ todo.title }}</span>
+                     <span
+                        v-if="todo.id !== updateId"
+                        @click="editTitle(todo)"
+                        >{{ todo.title }}</span
+                     >
                      <form v-else @submit.prevent="updateTodoTitle(todo)">
                         <input
                            type="text"
@@ -24,13 +27,16 @@
                         <input type="submit" value="Submit" hidden="true" />
                      </form>
                   </div>
-                  <p class="buttons has-text-centered">
+                  <p class="buttons is-right">
                      <button @click="deleteTodo(todo.id)" class="button">
                         <span class="icon is-small">
                            <i class="fas fa-trash-alt"></i>
                         </span>
                      </button>
-                     <button @click="updateCompleted($event, todo)" class="button">
+                     <button
+                        @click="updateCompleted($event, todo)"
+                        class="button"
+                     >
                         <span class="icon is-small">
                            <i class="fas fa-check"></i>
                         </span>
@@ -75,14 +81,12 @@ export default {
          this.updateTodo(updTodo);
       },
       editTitle(todo) {
-         if (todo.id !== this.updateId) {
-            // console.log("updating id: " + todo.id);
-            this.updateId = todo.id;
-            this.updateText = todo.title;
-            this.$nextTick(function() {
-               this.$refs.titleField[0].focus();
-            });
-         }
+         // console.log("updating id: " + todo.id);
+         this.updateId = todo.id;
+         this.updateText = todo.title;
+         this.$nextTick(function() {
+            this.$refs.titleField[0].focus();
+         });
       },
    },
    computed: mapGetters(["allTodos"]),
