@@ -2,10 +2,12 @@ import axios from "axios";
 
 const state = {
    todos: [],
+   loading: false
 };
 
 const getters = {
    allTodos: (state) => state.todos,
+   isLoading: (state) => state.loading
 };
 
 const actions = {
@@ -18,10 +20,12 @@ const actions = {
       commit("setTodos", response.data);
    },
    async addTodo({ commit }, title) {
+      state.loading = true
       const response = await axios.post(
          "https://jsonplaceholder.typicode.com/todos",
          { title, completed: false }
       );
+      state.loading = false
       commit("newTodo", response.data);
    },
    async deleteTodo({ commit }, id) {
